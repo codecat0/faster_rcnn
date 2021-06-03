@@ -3,8 +3,6 @@
 @Author : CodeCat
 @Time : 2021/6/3 上午11:47
 """
-from abc import ABC
-
 from torch.utils.data import Dataset
 import os
 import torch
@@ -13,7 +11,7 @@ from PIL import Image
 from lxml import etree
 
 
-class VOC2012DataSet(Dataset, ABC):
+class VOC2012DataSet(Dataset):
     def __init__(self, voc_root, transfroms, txt_name):
         self.root = os.path.join(voc_root, 'VOCdevkit', 'VOC2012')
         self.img_root = os.path.join(self.root, 'JPEGImages')
