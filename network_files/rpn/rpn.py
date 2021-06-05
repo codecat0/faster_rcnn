@@ -103,10 +103,10 @@ class RegionProposalNetwork(nn.Module):
             for computing the loss
         positive_fraction (float): proportion of positive anchors in a mini-batch during training
             of the RPN
-        pre_nms_top_n (Dict[int]): number of proposals to keep before applying NMS. It should
+        pre_nms_top_n (Dict[str, int]): number of proposals to keep before applying NMS. It should
             contain two fields: training and testing, to allow for different values depending
             on training or evaluation
-        post_nms_top_n (Dict[int]): number of proposals to keep after applying NMS. It should
+        post_nms_top_n (Dict[str, int]): number of proposals to keep after applying NMS. It should
             contain two fields: training and testing, to allow for different values depending
             on training or evaluation
         nms_thresh (float): NMS threshold used for postprocessing the RPN proposals
