@@ -11,19 +11,22 @@ import matplotlib.pyplot as plt
 import torch
 from torch.utils.data import DataLoader
 
-from .dataset_preprocess import transforms
-from .dataset_preprocess.dataset import VOC2012DataSet
+from dataset_preprocess import transforms
+from dataset_preprocess.dataset import VOC2012DataSet
 
-from .network_files.faster_rcnn import FasterRCNN
-from .network_files.roi_head.faster_rcnn_predictor import FasterRCNNPredictor
-from .network_files.backbone.resnet50_fpn_model import resnet50_fpn_backbone
+from network_files.faster_rcnn import FasterRCNN
+from network_files.roi_head.faster_rcnn_predictor import FasterRCNNPredictor
+from network_files.backbone.resnet50_fpn_model import resnet50_fpn_backbone
 
 
 def create_model(num_classes, device):
     backbone = resnet50_fpn_backbone()
-    model = FasterRCNN(backbone=backbone, num_classes=num_classes)
+    model = FasterRCNN(backbone=backbone, num_classes=91)
     weights_dict = torch.load("./network_files/backbone/fasterrcnn_resnet50_fpn_coco.pth", map_location=device)
-    _, _ = model.load_state_dict(weights_dict, strict=False)
+    missing_keys, unexcepted_keys = model.load_state_dict(weights_dict, strict=False)
+    if len(missing_keys) != 0 or len(unexcepted_keys) != 0:
+        print('missing_keys: ', missing_keys)
+        print('unexcepted_keys: ', unexcepted_keys)
 
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = FasterRCNNPredictor(in_features, num_classes)
