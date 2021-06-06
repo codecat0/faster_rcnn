@@ -126,6 +126,9 @@ def main(parser_data):
             optimizer.step()
             now_lr = optimizer.param_groups[0]['lr']
 
+            if (i+1) % 50 == 0:
+                print("Epoch[{}], step[{}], mloss: {}, lr: {}".format(epoch, i, mloss, now_lr))
+
         train_loss.append(mloss.item())
         learing_rate.append(now_lr.item())
 
