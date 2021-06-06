@@ -166,7 +166,7 @@ class RoIHead(nn.Module):
             gt_boxes_in_image = gt_boxes[img_id]
             if gt_boxes_in_image.numel() == 0:
                 gt_boxes_in_image = torch.zeros((1, 4), dtype=dtype, device=device)
-            matched_gt_boxes.append(gt_boxes_in_image[img_id])
+            matched_gt_boxes.append(gt_boxes_in_image[matched_idxs[img_id]])
 
         # 根据gt box和proposals计算回归参数
         regression_targets = self.box_coder.encode(matched_gt_boxes, proposals)

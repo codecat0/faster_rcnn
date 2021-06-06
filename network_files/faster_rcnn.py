@@ -52,10 +52,10 @@ class FasterRCNNBase(nn.Module):
         proposals, proposal_losses = self.rpn(images, features, targets)
 
         # 将rpn生成的数据以及target标注信息传入fast_rcnn后半部分
-        detections, detector_losses = self.roi_heads(features, proposals, images.image_size, targets)
+        detections, detector_losses = self.roi_heads(features, proposals, images.image_sizes, targets)
 
         # 对网格的预测结果进行后处理，主要是将预测的box信息还原到原始图像上
-        detections = self.transform.postprocess(detections, images.image_size, original_image_sizes)
+        detections = self.transform.postprocess(detections, images.image_sizes, original_image_sizes)
 
         losses = {}
         losses.update(detector_losses)
