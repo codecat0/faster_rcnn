@@ -3,14 +3,12 @@
 @Author : CodeCat
 @Time : 2021/6/3 下午5:41
 """
-from abc import ABC
-
 import torch.nn as nn
 
 from collections import OrderedDict
 
 
-class IntermediateLayerGetter(nn.ModuleDict, ABC):
+class IntermediateLayerGetter(nn.ModuleDict):
     def __init__(self, model, return_layers):
         if not set(return_layers).issubset([name for name, _ in model.named_children()]):
             raise ValueError("return_layers are not present in model")

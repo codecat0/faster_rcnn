@@ -3,9 +3,6 @@
 @Author : CodeCat
 @Time : 2021/6/3 下午5:58
 """
-import os
-from collections import OrderedDict
-
 import torch
 import torch.nn as nn
 from torchvision.ops.misc import FrozenBatchNorm2d

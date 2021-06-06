@@ -44,7 +44,7 @@ class FeaturePyramidNetwork(nn.Module):
         results.append(self.layer_blocks[-1](last_inner))
 
         for idx in range(len(x)-2, -1, -1):
-            inner_lateral = self.inner_blocks(x[idx])
+            inner_lateral = self.inner_blocks[idx](x[idx])
             feat_shape = inner_lateral.shape[-2:]
             inner_top_down = F.interpolate(last_inner, size=feat_shape, mode='nearest')
             last_inner = inner_lateral + inner_top_down
