@@ -3,8 +3,6 @@
 @Author : CodeCat
 @Time : 2021/6/3 下午3:14
 """
-from typing import List, Tuple
-from torch import Tensor
 
 
 class ImageList(object):
