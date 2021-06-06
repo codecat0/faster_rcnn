@@ -4,7 +4,7 @@
 @Time : 2021/6/4 下午2:44
 """
 import torch
-from torch import nn, Tensor
+from torch import nn
 
 from typing import List
 

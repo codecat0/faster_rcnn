@@ -103,7 +103,7 @@ class BoxCoder(object):
         boxes_per_image = [len(b) for b in reference_boxes]
 
         reference_boxes = torch.cat(reference_boxes, dim=0)
-        anchors = torch.cat(anchors, dim=1)
+        anchors = torch.cat(anchors, dim=0)
 
         targets = self.encode_single(reference_boxes, anchors)
         return targets.split(boxes_per_image, 0)
@@ -190,7 +190,7 @@ class Matcher(object):
 
         # 获取iou小于low_threshold和iou处于low_threshold和high_threshold之间的索引值
         below_low_threshold = matched_vals < self.low_threshold
-        between_thresholds = (matched_vals >= self.low_threshold) and (matched_vals <= self.high_threshold)
+        between_thresholds = (matched_vals >= self.low_threshold) & (matched_vals <= self.high_threshold)
 
         # iou小于low_threshold的mathes索引置为-1
         mathes[below_low_threshold] = self.BELOW_LOW_THRESHOLD
@@ -201,10 +201,12 @@ class Matcher(object):
         if self.allow_low_quality_mathes:
             self.set_low_quality_mathes_(mathes, all_mathes, match_quality_matrix)
 
+        return mathes
+
     @staticmethod
     def set_low_quality_mathes_(mathes, all_mathes, match_quality_matrix):
         """将每个gtbox匹配的最大iou对应的anchor添加进来"""
         highest_quality_foreach_gt, _ = match_quality_matrix.max(dim=1)
         gt_pred_paris_of_highest_quality = torch.where(torch.eq(match_quality_matrix, highest_quality_foreach_gt[:, None]))
-        pre_inds_to_update = gt_pred_paris_of_highest_quality[:, 1]
+        pre_inds_to_update = gt_pred_paris_of_highest_quality[1]
         mathes[pre_inds_to_update] = all_mathes[pre_inds_to_update]

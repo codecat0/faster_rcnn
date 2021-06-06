@@ -4,15 +4,14 @@
 @Time : 2021/6/4 下午3:50
 """
 import torch
-from torch import nn, Tensor
+from torch import nn
 from torch.nn import functional as F
-import torchvision
 
 from . import _utils as det_utils
 from . import boxes as box_ops
 from .anchor_utils import AnchorGenerator
 
-from typing import List, Optional, Dict, Tuple
+from typing import Dict
 
 
 class RPNHead(nn.Module):
@@ -331,7 +330,7 @@ class RegionProposalNetwork(nn.Module):
         ) / (sampled_inds.numel())
 
         # 计算目标预测概率损失
-        objectness_loss = F.binary_cross_entropy(
+        objectness_loss = F.binary_cross_entropy_with_logits(
             objectness[sampled_inds],
             labels[sampled_inds]
         )
