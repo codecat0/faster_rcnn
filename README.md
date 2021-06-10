@@ -5,13 +5,12 @@
 
 ### 环境配置
 ```
-torch
-torchvision
-Pillow
-numpy 
-matplotlib
-lxml
-Pillow
+torch==1.8.1
+torchvision==0.9.1
+Pillow==8.1.2
+numpy==1.19.2
+matplotlib==3.3.4
+lxml==4.6.3
 json
 ```
 
