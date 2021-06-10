@@ -36,3 +36,6 @@ json
 1. 下载`PASCAL VOC2012`数据集，并将其放在项目根目录下
 2. 下载`backbone ResNet50+FPN`权重，路径与`train_resnet50_fpn.py`中载入模型参数位置保持一致
 3. 运行`train_resnet50_fpn.py`文件
+
+### 网络结构图
+![](faster_rcnn.jpg)
